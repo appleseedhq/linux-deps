@@ -243,6 +243,10 @@ inline T from_string (string_view s) {
 template<> inline int from_string<int> (string_view s) {
     return s.size() ? strtol (s.c_str(), NULL, 10) : 0;
 }
+// Special case for uint
+template<> inline unsigned int from_string<unsigned int> (string_view s) {
+    return s.size() ? strtoul (s.c_str(), NULL, 10) : (unsigned int)0;
+}
 // Special case for float
 template<> inline float from_string<float> (string_view s) {
     return s.size() ? (float)strtod (s.c_str(), NULL) : 0.0f;
@@ -268,7 +272,7 @@ template<> inline float from_string<float> (string_view s) {
 template<class T>
 int extract_from_list_string (std::vector<T> &vals,
                               string_view list,
-                              string_view sep = string_view(",",1))
+                              string_view sep = ",")
 {
     size_t nvals = vals.size();
     std::vector<string_view> valuestrings;
@@ -277,8 +281,10 @@ int extract_from_list_string (std::vector<T> &vals,
         T v = from_string<T> (valuestrings[i]);
         if (nvals == 0)
             vals.push_back (v);
-        else if (valuestrings[i].size())
-            vals[i] = from_string<T> (valuestrings[i]);
+        else if (valuestrings[i].size()) {
+            if (vals.size() > i)  // don't replace non-existnt entries
+                vals[i] = from_string<T> (valuestrings[i]);
+        }
         /* Otherwise, empty space between commas, so leave default alone */
     }
     if (valuestrings.size() == 1 && nvals > 0) {
@@ -446,6 +452,12 @@ string_view OIIO_API parse_identifier (string_view &str, bool eat=true);
 /// underscore characters.
 string_view OIIO_API parse_identifier (string_view &str,
                                        string_view allowed, bool eat);
+
+/// If the C-like identifier at the head of str exactly matches id,
+/// return true, and also advance str if eat is true. If it is not a match
+/// for id, return false and do not alter str.
+bool OIIO_API parse_identifier_if (string_view &str, string_view id,
+                                   bool eat=true);
 
 /// Return the characters until any character in sep is found, storing it in
 /// str, and additionally modify str to skip over the parsed section if eat

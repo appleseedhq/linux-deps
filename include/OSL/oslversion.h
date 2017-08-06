@@ -40,10 +40,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //     for compiled shaders.
 // These are all independent, though loosely coupled.
 
+// Version of the language:
+#define OSL_VERSION_MAJOR 1
+#define OSL_VERSION_MINOR 8
+#define OSL_VERSION_PATCH 10
+#define OSL_VERSION (10000 * OSL_VERSION_MAJOR + \
+                               100 * OSL_VERSION_MINOR + \
+                                     OSL_VERSION_PATCH)
+
 // Version of this library:
 #define OSL_LIBRARY_VERSION_MAJOR 1
-#define OSL_LIBRARY_VERSION_MINOR 7
-#define OSL_LIBRARY_VERSION_PATCH 4
+#define OSL_LIBRARY_VERSION_MINOR 8
+#define OSL_LIBRARY_VERSION_PATCH 10
 #define OSL_LIBRARY_VERSION_RELEASE_TYPE 
 
 #define OSL_LIBRARY_VERSION_CODE (10000 * OSL_LIBRARY_VERSION_MAJOR + \
@@ -81,15 +89,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef OSL_NAMESPACE
 // Macros to use in each file to enter and exit the right name spaces.
 #define OSL_NAMESPACE_ENTER namespace OSL_NAMESPACE { namespace OSL {
-#define OSL_NAMESPACE_EXIT }; }; using namespace OSL_NAMESPACE;
+#define OSL_NAMESPACE_EXIT } } using namespace OSL_NAMESPACE;
 #else
 #define OSL_NAMESPACE_ENTER namespace OSL {
-#define OSL_NAMESPACE_EXIT };
+#define OSL_NAMESPACE_EXIT }
 #endif
 
-/// OSL_BUILD_CPP11 will be 1 if this OSL was built using C++11
-#define OSL_BUILD_CPP11 0
-/// OSL_BUILD_USELIBPLUSPLUS will be 1 if this OSL was built using libc++
-#define OSL_BUILD_LIBCPLUSPLUS 0
+// OSL_BUILD_CPP11 will be 1 if this OSL was built using C++11
+#define OSL_BUILD_CPP11 1
+// OSL_BUILD_CPP14 will be 1 if this OSL was built using C++14
+#define OSL_BUILD_CPP14 0
 
 #endif /* OSLVERSION_H */

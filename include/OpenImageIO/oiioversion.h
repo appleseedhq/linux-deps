@@ -38,7 +38,7 @@
 #define OIIO_NAMESPACE OpenImageIO
 #define OIIO_VERSION_MAJOR 1
 #define OIIO_VERSION_MINOR 7
-#define OIIO_VERSION_PATCH 10
+#define OIIO_VERSION_PATCH 15
 #define OIIO_VERSION_RELEASE_TYPE 
 #define OIIO_VERSION_NS v1_7
 
@@ -123,7 +123,7 @@ namespace OIIO = OIIO_NAMESPACE::OIIO_VERSION_NS;
 #endif
 
 // OIIO_BUILD_CPP11 will be 1 if this OIIO was built using C++11
-#define OIIO_BUILD_CPP11 0
+#define OIIO_BUILD_CPP11 1
 // OIIO_BUILD_CPP14 will be 1 if this OIIO was built using C++14
 #define OIIO_BUILD_CPP14 0
 
